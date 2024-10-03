@@ -6,22 +6,21 @@ import addGithubPackagesRepository
 import co.touchlab.faktory.KmmBridgeExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
-import com.vanniktech.maven.publish.SonatypeHost.S01
 import kotlinx.atomicfu.plugin.gradle.AtomicFUPluginExtension
 import kotlinx.kover.api.KoverMergedConfig
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.api.publish.PublishingExtension
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
-import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
     override fun apply(project: Project) = with(project) {
@@ -32,7 +31,6 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
             apply("org.jetbrains.kotlin.plugin.serialization")
             apply("com.android.library")
             apply("com.vanniktech.maven.publish")
-            apply("org.jetbrains.dokka")
             apply("org.jetbrains.kotlinx.kover")
             apply("co.touchlab.faktory.kmmbridge")
             apply("maven-publish")
@@ -119,7 +117,6 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
 
         configureKotlin()
         configureAndroid()
-        configureDokka()
         configureMavenPublishing()
         addGithubPackagesRepository()
         configureKmmBridge()
@@ -172,13 +169,23 @@ object Versions {
     const val COMPILE_SDK = 34
     const val MIN_SDK = 24
     const val TARGET_SDK = 34
-    const val STORE = "5.1.0-SNAPSHOT"
+    const val STORE = "5.1.1-treecard"
 }
 
 
-fun Project.configureMavenPublishing() = extensions.configure<MavenPublishBaseExtension> {
-    publishToMavenCentral(S01)
-    signAllPublications()
+fun Project.configureMavenPublishing() {
+    extensions.getByType<PublishingExtension>().apply {
+        repositories {
+            maven {
+                name = "TreecardGithub"
+                url = uri("https://maven.pkg.github.com/TreeCard/Store")
+                credentials {
+                    username = "<enter something here>"
+                    password = "<enter something here>"
+                }
+            }
+        }
+    }
 }
 
 

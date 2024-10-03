@@ -4,6 +4,13 @@ plugins {
 
 kotlin {
 
+    cocoapods {
+        summary = "Store5/Multicast"
+        homepage = "https://github.com/MobileNativeFoundation/Store"
+        ios.deploymentTarget = "13"
+        version = libs.versions.store.get()
+    }
+
     sourceSets {
 
         val commonMain by getting {

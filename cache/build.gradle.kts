@@ -11,6 +11,13 @@ kotlin {
         nodejs()
     }
 
+    cocoapods {
+        summary = "Store5/Cache"
+        homepage = "https://github.com/MobileNativeFoundation/Store"
+        ios.deploymentTarget = "13"
+        version = libs.versions.store.get()
+    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {

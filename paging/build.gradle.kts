@@ -88,12 +88,19 @@ tasks.withType<DokkaTask>().configureEach {
     }
 }
 
-mavenPublishing {
-    publishToMavenCentral(SonatypeHost.S01)
-    signAllPublications()
+publishing {
+    repositories {
+        maven {
+            name = "TreecardGithub"
+            url = uri("https://maven.pkg.github.com/TreeCard/Store")
+            credentials {
+                username = "<enter something here>"
+                password = "<enter something here>"
+            }
+        }
+    }
 }
 
-addGithubPackagesRepository()
 kmmbridge {
     githubReleaseArtifacts()
     githubReleaseVersions()

@@ -14,7 +14,6 @@ class AndroidConventionPlugin : Plugin<Project> {
             apply("org.jetbrains.kotlin.android")
             apply("com.android.library")
             apply("com.vanniktech.maven.publish")
-            apply("org.jetbrains.dokka")
             apply("org.jetbrains.kotlinx.kover")
             apply("maven-publish")
             apply("org.jetbrains.kotlin.native.cocoapods")
