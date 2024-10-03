@@ -10,6 +10,14 @@
     <h4>Join our official Slack on <a href="https://kotlinlang.slack.com/archives/C06007Z01HU">kotlinlang</a>!</h4>
 </div>
 
+### Publishing Treecard fork
+
+- Create a personal access token with write:packages access.
+- Update `KotlinMultiplatformConventionPlugin` class with a Github username and a personal access token.
+- Update `paging/build.gradle.kts` with a Github username and a personal access token.
+- Search and replace all references of current version with your new version. Current version is `5.1.1-treecard`.
+- In terminal run: `./gradlew publishAllPublicationsToTreecardGithubRepository` and wait for it to finish.
+
 ### Concepts
 
 - [Store](https://mobilenativefoundation.github.io/Store/store/store/) is a typed repository that returns a flow
